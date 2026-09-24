@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT 
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.18;
 
@@ -12,26 +12,17 @@ contract DeployMoodNft is Script {
         string memory happySvg = vm.readFile("img/happy.svg");
 
         vm.startBroadcast();
-        MoodNft moodNft = new MoodNft(
-            svgToImageURI(sadSvg),
-            svgToImageURI(happySvg)
-        );
+        MoodNft moodNft = new MoodNft(svgToImageURI(sadSvg), svgToImageURI(happySvg));
         vm.stopBroadcast();
         return moodNft;
-
     }
 
-    function svgToImageURI(
-        string memory svg 
-    ) public pure returns (string memory) {
+    function svgToImageURI(string memory svg) public pure returns (string memory) {
         // example:
         // <svg width="1024px" height="1024px" ...>
         // data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNHB4IiBo...
         string memory baseURL = "data:image/svg+xml;base64,";
-        string memory svgBase64Encoded = Base64.encode(
-            bytes(string(abi.encodePacked(svg)))
-        );
+        string memory svgBase64Encoded = Base64.encode(bytes(string(abi.encodePacked(svg))));
         return string(abi.encodePacked(baseURL, svgBase64Encoded));
     }
-    
 }
